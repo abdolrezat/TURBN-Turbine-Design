@@ -54,7 +54,7 @@ function Turbine_StageDesign_v2_OpeningFcn(hObject, eventdata, handles, varargin
 
 % Choose default command line output for Turbine_StageDesign_v2
 handles.output = hObject;
-handles.radiostat = 'alpha3M3R';
+handles.radiostat = 'alpha3MR';
 
 % Update handles structure
 guidata(hObject, handles);
