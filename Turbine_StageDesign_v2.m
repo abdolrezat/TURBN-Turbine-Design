@@ -379,11 +379,10 @@ function calculate_button_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 fcn_alpha_2un;
 
-%% test
+%% callback format
 
-Results_Table2 = Results_Table + 10;
-Results_Panel2 = Results_Panel + 10;
-Turbine_Results({Results_Table,Results_Table2},{Results_Panel,Results_Panel2});
+
+% Turbine_Results({Results_Table,Results_Table2},{Results_Panel,Results_Panel2});
 %% test code
 
 

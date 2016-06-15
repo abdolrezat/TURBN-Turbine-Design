@@ -60,15 +60,17 @@ function Turbine_Results_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 handles.stagenumber = 1; % start from stage 1
 % 
-% if(varargin{2} == 'SI')
+% if(varargin{3} == 'SI')
 %     % revise : fill with SI units
 % else
 %     handles.units = {'R';'R';'psia';'psia';'';'ft/s';'ft/s';'ft/s';'deg';'deg';'in.'};
 % end
-handles.TABLEDATA = varargin{1};
-set(handles.data_table,'data',handles.TABLEDATA);
 
+handles.TABLEDATA = varargin{1};
+set(handles.data_table,'data',handles.TABLEDATA{1});
 % end of setting table data
+
+handles.maxstage = length(handles.TABLEDATA);%get total number of stages
 
 % Setting Image
 % Read in Image
@@ -80,18 +82,19 @@ imshow(imageArray);
 
 % "Results panel" data
 handles.results_data = varargin{2};
-set(handles.Pr_s_statictext,'String',num2str(handles.results_data(1)));
-set(handles.n_s_statictext,'String', num2str(handles.results_data(2)));
-set(handles.SAI_statictext,'String', num2str(handles.results_data(3)));
-set(handles.PHI_statictext,'String', num2str(handles.results_data(4)));
-set(handles.VR_statictext,'String',  num2str(handles.results_data(5)));
-set(handles.RPM_statictext,'String',num2str(handles.results_data(6)));
-set(handles.A1_statictext,'String',num2str(handles.results_data(7)));
-set(handles.A2_statictext,'String',num2str(handles.results_data(8)));
-set(handles.A3_statictext,'String',num2str(handles.results_data(9)));
-set(handles.blade_space_h_statictext,'String',num2str(handles.results_data(10)));
-set(handles.blade_space_m_statictext,'String',num2str(handles.results_data(11)));
-set(handles.blade_space_t_statictext,'String',num2str(handles.results_data(12)));
+handles.results_data_stage = handles.results_data{1};
+set(handles.Pr_s_statictext,'String',num2str(handles.results_data_stage(1)));
+set(handles.n_s_statictext,'String', num2str(handles.results_data_stage(2)));
+set(handles.SAI_statictext,'String', num2str(handles.results_data_stage(3)));
+set(handles.PHI_statictext,'String', num2str(handles.results_data_stage(4)));
+set(handles.VR_statictext,'String',  num2str(handles.results_data_stage(5)));
+set(handles.RPM_statictext,'String',num2str(handles.results_data_stage(6)));
+set(handles.A1_statictext,'String',num2str(handles.results_data_stage(7)));
+set(handles.A2_statictext,'String',num2str(handles.results_data_stage(8)));
+set(handles.A3_statictext,'String',num2str(handles.results_data_stage(9)));
+set(handles.blade_space_h_statictext,'String',num2str(handles.results_data_stage(10)));
+set(handles.blade_space_m_statictext,'String',num2str(handles.results_data_stage(11)));
+set(handles.blade_space_t_statictext,'String',num2str(handles.results_data_stage(12)));
 
 
 % Update handles structure
@@ -137,9 +140,63 @@ function nextstage_button_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+if(handles.stagenumber < handles.maxstage )
+handles.stagenumber = handles.stagenumber + 1;
+%% Show new Results
+set(handles.data_table,'data',handles.TABLEDATA{handles.stagenumber});
+
+% "Results panel" data
+handles.results_data_stage = handles.results_data{handles.stagenumber};
+set(handles.Pr_s_statictext,'String',num2str(handles.results_data_stage(1)));
+set(handles.n_s_statictext,'String', num2str(handles.results_data_stage(2)));
+set(handles.SAI_statictext,'String', num2str(handles.results_data_stage(3)));
+set(handles.PHI_statictext,'String', num2str(handles.results_data_stage(4)));
+set(handles.VR_statictext,'String',  num2str(handles.results_data_stage(5)));
+set(handles.RPM_statictext,'String',num2str(handles.results_data_stage(6)));
+set(handles.A1_statictext,'String',num2str(handles.results_data_stage(7)));
+set(handles.A2_statictext,'String',num2str(handles.results_data_stage(8)));
+set(handles.A3_statictext,'String',num2str(handles.results_data_stage(9)));
+set(handles.blade_space_h_statictext,'String',num2str(handles.results_data_stage(10)));
+set(handles.blade_space_m_statictext,'String',num2str(handles.results_data_stage(11)));
+set(handles.blade_space_t_statictext,'String',num2str(handles.results_data_stage(12)));
+
+%% update Title of stage
+
+% Update handles structure
+guidata(hObject, handles);
+
+end
+
 
 % --- Executes on button press in prevstage_button.
 function prevstage_button_Callback(hObject, eventdata, handles)
 % hObject    handle to prevstage_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+if(handles.stagenumber > 1 )
+handles.stagenumber = handles.stagenumber - 1;
+%% Show new Results
+set(handles.data_table,'data',handles.TABLEDATA{handles.stagenumber});
+
+% "Results panel" data
+handles.results_data_stage = handles.results_data{handles.stagenumber};
+set(handles.Pr_s_statictext,'String',num2str(handles.results_data_stage(1)));
+set(handles.n_s_statictext,'String', num2str(handles.results_data_stage(2)));
+set(handles.SAI_statictext,'String', num2str(handles.results_data_stage(3)));
+set(handles.PHI_statictext,'String', num2str(handles.results_data_stage(4)));
+set(handles.VR_statictext,'String',  num2str(handles.results_data_stage(5)));
+set(handles.RPM_statictext,'String',num2str(handles.results_data_stage(6)));
+set(handles.A1_statictext,'String',num2str(handles.results_data_stage(7)));
+set(handles.A2_statictext,'String',num2str(handles.results_data_stage(8)));
+set(handles.A3_statictext,'String',num2str(handles.results_data_stage(9)));
+set(handles.blade_space_h_statictext,'String',num2str(handles.results_data_stage(10)));
+set(handles.blade_space_m_statictext,'String',num2str(handles.results_data_stage(11)));
+set(handles.blade_space_t_statictext,'String',num2str(handles.results_data_stage(12)));
+
+%% update Title of stage
+
+
+% Update handles structure
+guidata(hObject, handles);
+
+end
