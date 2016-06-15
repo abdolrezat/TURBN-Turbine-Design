@@ -22,7 +22,7 @@ function varargout = Turbine_StageDesign_v2(varargin)
 
 % Edit the above text to modify the response to help Turbine_StageDesign_v2
 
-% Last Modified by GUIDE v2.5 15-Jun-2016 20:32:29
+% Last Modified by GUIDE v2.5 15-Jun-2016 20:54:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -54,7 +54,7 @@ function Turbine_StageDesign_v2_OpeningFcn(hObject, eventdata, handles, varargin
 
 % Choose default command line output for Turbine_StageDesign_v2
 handles.output = hObject;
-handles.radiostat = 'alpha3';
+handles.radiostat = 'alpha3M3R';
 
 % Update handles structure
 guidata(hObject, handles);
@@ -561,11 +561,13 @@ function radiobutton_alpha2_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.Tt3_textbox,'Enable','on');
+set(handles.M3R_textbox,'Enable','off');
 set(handles.alpha3_textbox,'Enable','on');
 set(handles.alpha2_textbox,'Enable','off');
 set(handles.M2_textbox,'Enable','on');
 
 set(handles.radiobutton_Tt3,'Value',0);
+set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_alpha2,'Value',1);
 set(handles.radiobutton_alpha3,'Value',0);
 set(handles.radiobutton_M2,'Value',0);
@@ -581,10 +583,12 @@ function radiobutton_alpha3_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.Tt3_textbox,'Enable','on');
+set(handles.M3R_textbox,'Enable','off');
 set(handles.alpha3_textbox,'Enable','off');
 set(handles.alpha2_textbox,'Enable','on');
 set(handles.M2_textbox,'Enable','on');
 
+set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_Tt3,'Value',0);
 set(handles.radiobutton_alpha2,'Value',0);
 set(handles.radiobutton_alpha3,'Value',1);
@@ -603,10 +607,13 @@ function radiobutton_Tt3_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 set(handles.Tt3_textbox,'Enable','off');
+set(handles.M3R_textbox,'Enable','off');
+
 set(handles.alpha3_textbox,'Enable','on');
 set(handles.alpha2_textbox,'Enable','on');
 set(handles.M2_textbox,'Enable','on');
 
+set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_Tt3,'Value',1);
 set(handles.radiobutton_alpha2,'Value',0);
 set(handles.radiobutton_alpha3,'Value',0);
@@ -624,10 +631,12 @@ function radiobutton_M2_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.Tt3_textbox,'Enable','on');
+set(handles.M3R_textbox,'Enable','off');
 set(handles.alpha3_textbox,'Enable','on');
 set(handles.alpha2_textbox,'Enable','on');
 set(handles.M2_textbox,'Enable','off');
 
+set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_Tt3,'Value',0);
 set(handles.radiobutton_alpha2,'Value',0);
 set(handles.radiobutton_alpha3,'Value',0);
@@ -651,6 +660,51 @@ function alpha2_textbox_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function alpha2_textbox_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to alpha2_textbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in radiobutton_alpha3MR.
+function radiobutton_alpha3MR_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton_alpha3MR (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.Tt3_textbox,'Enable','off');
+set(handles.M3R_textbox,'Enable','on');
+set(handles.alpha3_textbox,'Enable','off');
+set(handles.alpha2_textbox,'Enable','on');
+set(handles.M2_textbox,'Enable','on');
+
+set(handles.radiobutton_alpha3MR,'Value',1);
+set(handles.radiobutton_Tt3,'Value',0);
+set(handles.radiobutton_alpha2,'Value',0);
+set(handles.radiobutton_alpha3,'Value',0);
+set(handles.radiobutton_M2,'Value',0);
+
+handles.radiostat = 'alpha3MR';
+guidata(hObject, handles);
+% Hint: get(hObject,'Value') returns toggle state of radiobutton_alpha3MR
+
+
+
+function M3R_textbox_Callback(hObject, eventdata, handles)
+% hObject    handle to M3R_textbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of M3R_textbox as text
+%        str2double(get(hObject,'String')) returns contents of M3R_textbox as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function M3R_textbox_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to M3R_textbox (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
