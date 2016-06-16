@@ -759,8 +759,8 @@ function slider_stage_Callback(hObject, eventdata, handles)
 % hObject    handle to slider_stage (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-if( get(hObject,'Value'))
+if(get(handles.radiobutton8,'Value') == 1)
+if( get(hObject,'Value') == 1 )
     if(handles.stagenumber < 10)
 
         handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) + 1 ;
@@ -786,6 +786,7 @@ elseif(get(hObject,'Value') == 0 )
         %% columns set
     
     end
+end
 end
 set(hObject,'Value',0.5);
 
@@ -840,6 +841,11 @@ function radiobutton8_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.stagenumber_textbox,'Enable','on');
 handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String'));
+new_data = handles.Default_Data;
+for i=3:handles.stagenumber
+    new_data = [new_data,handles.Empty_Data];
+end
+set(handles.Table_Stage,'Data',new_data);
 guidata(hObject, handles);
 
 % Hint: get(hObject,'Value') returns toggle state of radiobutton8
@@ -852,6 +858,7 @@ function radiobutton7_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.stagenumber_textbox,'Enable','off');
 handles.stagenumber = 1;
+set(handles.Table_Stage,'Data',handles.Empty_Data);
 guidata(hObject, handles);
 
 % Hint: get(hObject,'Value') returns toggle state of radiobutton7
