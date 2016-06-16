@@ -56,6 +56,9 @@ function Turbine_StageDesign_v2_OpeningFcn(hObject, eventdata, handles, varargin
 handles.output = hObject;
 handles.radiostat = 'alpha3MR';
 handles.stagenumber = 2 ;
+handles.Default_Data = {1.0,1.0;65,65;1.05,0.8;0.9,0.6;1,1;1,1;1,1;1,0.7;0.02,0.02;0.9,0.9};
+handles.Empty_Data = {[];[];[];[];[];[];[];[];[];[]};
+set(handles.Table_Stage,'Data',handles.Default_Data);
 % Update handles structure
 guidata(hObject, handles);
 
@@ -759,16 +762,35 @@ function slider_stage_Callback(hObject, eventdata, handles)
 
 if( get(hObject,'Value'))
     if(handles.stagenumber < 10)
-    handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) + 1 ;
-    set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
+
+        handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) + 1 ;
+        set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
+        %% set table columns
+        new_data = handles.Default_Data;
+        for i=3:handles.stagenumber
+            new_data = [new_data,handles.Empty_Data];
+        end
+        set(handles.Table_Stage,'Data',new_data);
+        %% columns set
     end
 elseif(get(hObject,'Value') == 0 )
-    if(handles.stagenumber > 1)
-    handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) - 1 ;
-    set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
+    if(handles.stagenumber > 2)
+        handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) - 1 ;
+        set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
+        %% set table columns
+        new_data = handles.Default_Data;
+        for i=3:handles.stagenumber
+            new_data = [new_data,handles.Empty_Data];
+        end
+        set(handles.Table_Stage,'Data',new_data);
+        %% columns set
+    
     end
 end
 set(hObject,'Value',0.5);
+
+
+
 guidata(hObject, handles);
 
 % Hints: get(hObject,'Value') returns position of slider
