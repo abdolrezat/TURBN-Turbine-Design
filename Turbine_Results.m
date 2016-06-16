@@ -58,7 +58,7 @@ function Turbine_Results_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for Turbine_Results
 handles.output = hObject;
-handles.stagenumber = 1; % start from stage 1
+handles.stagenumber = 1; % start from stage 1, not to be confused with total stagenumbers
 % 
 % if(varargin{3} == 'SI')
 %     % revise : fill with SI units
