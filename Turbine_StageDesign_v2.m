@@ -22,7 +22,7 @@ function varargout = Turbine_StageDesign_v2(varargin)
 
 % Edit the above text to modify the response to help Turbine_StageDesign_v2
 
-% Last Modified by GUIDE v2.5 16-Jun-2016 03:08:09
+% Last Modified by GUIDE v2.5 16-Jun-2016 15:28:41
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -55,7 +55,7 @@ function Turbine_StageDesign_v2_OpeningFcn(hObject, eventdata, handles, varargin
 % Choose default command line output for Turbine_StageDesign_v2
 handles.output = hObject;
 handles.radiostat = 'alpha3MR';
-
+handles.stagenumber = 2 ;
 % Update handles structure
 guidata(hObject, handles);
 
@@ -404,6 +404,7 @@ end
 
 %call up the Results Figure
 % uncomment !! Turbine_Results(Results_Table,Results_Panel);
+guidata(hObject, handles);
 
 
 
@@ -740,6 +741,114 @@ function Zr_textbox_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function Zr_textbox_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to Zr_textbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on slider movement.
+function slider_stage_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_stage (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.testtext,'String',num2str(get(hObject,'Value')))
+
+if( get(hObject,'Value'))
+    if(handles.stagenumber < 10)
+    handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) + 1 ;
+    set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
+    end
+elseif(get(hObject,'Value') == 0 )
+    if(handles.stagenumber > 1)
+    handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) - 1 ;
+    set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
+    end
+end
+set(hObject,'Value',0.5);
+guidata(hObject, handles);
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
+% --- Executes during object creation, after setting all properties.
+function slider_stage_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_stage (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+
+function stagenumber_textbox_Callback(hObject, eventdata, handles)
+% hObject    handle to stagenumber_textbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of stagenumber_textbox as text
+%        str2double(get(hObject,'String')) returns contents of stagenumber_textbox as a double
+handles.stagenumber = str2double(get(hObject,'String'));
+guidata(hObject, handles);
+
+% --- Executes during object creation, after setting all properties.
+function stagenumber_textbox_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to stagenumber_textbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in radiobutton8.
+function radiobutton8_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.stagenumber_textbox,'Enable','on');
+handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String'));
+guidata(hObject, handles);
+
+% Hint: get(hObject,'Value') returns toggle state of radiobutton8
+
+
+% --- Executes on button press in radiobutton7.
+function radiobutton7_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.stagenumber_textbox,'Enable','off');
+handles.stagenumber = 1;
+guidata(hObject, handles);
+
+% Hint: get(hObject,'Value') returns toggle state of radiobutton7
+
+
+
+function testtext_Callback(hObject, eventdata, handles)
+% hObject    handle to testtext (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of testtext as text
+%        str2double(get(hObject,'String')) returns contents of testtext as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function testtext_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to testtext (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
