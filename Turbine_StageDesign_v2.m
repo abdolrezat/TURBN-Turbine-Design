@@ -22,7 +22,7 @@ function varargout = Turbine_StageDesign_v2(varargin)
 
 % Edit the above text to modify the response to help Turbine_StageDesign_v2
 
-% Last Modified by GUIDE v2.5 15-Jun-2016 20:54:11
+% Last Modified by GUIDE v2.5 16-Jun-2016 03:08:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -378,7 +378,19 @@ function calculate_button_Callback(hObject, eventdata, handles)
 % hObject    handle to calculate_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-fcn_alpha_2un;
+switch handles.radiostat
+    case 'alpha2'
+        fcn_alpha_2un;
+    case 'alpha3'
+        % fcn not yet defined
+    case 'alpha3MR'
+        fcn_alpha3MR;
+    case 'Tt3'
+        % fcn not yet defined
+    case 'M2' 
+        % fcn not yet defined
+end
+
 
 %% callback format
 
@@ -705,6 +717,29 @@ function M3R_textbox_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function M3R_textbox_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to M3R_textbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Zr_textbox_Callback(hObject, eventdata, handles)
+% hObject    handle to Zr_textbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Zr_textbox as text
+%        str2double(get(hObject,'String')) returns contents of Zr_textbox as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Zr_textbox_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Zr_textbox (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
