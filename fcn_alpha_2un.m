@@ -17,11 +17,11 @@ y = str2double(get(handles.y_textbox,'String'));
 R = str2double(get(handles.R_textbox,'String')); %kJ/(kg.K)[cp = 1.245 kJ/(kg.K)]
 
 % partII variables
-m_dot = str2double(get(handles.m_dot_textbox,'String'));; %lbm/s
+m_dot = str2double(get(handles.m_dot_textbox,'String')); %lbm/s
 rm = str2double(get(handles.rm_textbox,'String')); %in
 Zs = str2double(get(handles.Zs_textbox,'String'));
 c_h = str2double(get(handles.c_h_textbox,'String'));
-gc = str2double(get(handles.gc_textbox,'String'));; 
+gc = str2double(get(handles.gc_textbox,'String')); 
 
 %% solution
 formulas;
