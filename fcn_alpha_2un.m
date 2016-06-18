@@ -2,26 +2,26 @@
 % IN SI UNITS:
 % DONT FORGET TO CONVERT PRESSURE TO "PA"
 
-Tt1 = str2double(get(handles.Tt1_textbox,'String'));
-Pt1 = str2double(get(handles.Pt1_textbox,'String'));   % x10^3
-M1 = str2double(get(handles.M1_textbox,'String'));
-alpha1 = deg2rad(str2double(get(handles.alpha1_textbox,'String'))); %convert degree to radian using deg2rad()
-Tt3 = str2double(get(handles.Tt3_textbox,'String'));
-M2 = str2double(get(handles.M2_textbox,'String'));
-wr = str2double(get(handles.wr_textbox,'String')); %m/s
-alpha3 = deg2rad(str2double(get(handles.alpha3_textbox,'String'))); %conver deg to rad
-u3_u2 = str2double(get(handles.u3_u2_textbox,'String'));
-phi_s = str2double(get(handles.phi_s_textbox,'String'));
-phi_r = str2double(get(handles.phi_r_textbox,'String'));
-y = str2double(get(handles.y_textbox,'String'));
-R = str2double(get(handles.R_textbox,'String')); %kJ/(kg.K)[cp = 1.245 kJ/(kg.K)]
+Tt1 = IN(1,stage_i);
+Pt1 = IN(2,stage_i);   % x10^3
+M1 = IN(3,stage_i);
+alpha1 = IN(4,stage_i); %convert degree to radian using deg2rad()
+Tt3 = IN(5,stage_i);
+M2 = IN(2,stage_i);
+wr = IN(2,stage_i); %m/s
+alpha3 = IN(2,stage_i); %conver deg to rad
+u3_u2 = IN(2,stage_i);
+phi_s = IN(2,stage_i);
+phi_r = IN(2,stage_i);
+y = IN(2,stage_i);
+R = IN(2,stage_i); %kJ/(kg.K)[cp = 1.245 kJ/(kg.K)]
 
 % partII variables
-m_dot = str2double(get(handles.m_dot_textbox,'String')); %lbm/s
-rm = str2double(get(handles.rm_textbox,'String')); %in
-Zs = str2double(get(handles.Zs_textbox,'String'));
-c_h = str2double(get(handles.c_h_textbox,'String'));
-gc = str2double(get(handles.gc_textbox,'String')); 
+m_dot = IN(2,stage_i); %lbm/s
+rm = IN(2,stage_i); %in
+Zs = IN(2,stage_i);
+c_h = IN(2,stage_i);
+gc = IN(2,stage_i); 
 
 %% solution
 formulas;

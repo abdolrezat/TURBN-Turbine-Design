@@ -58,6 +58,9 @@ handles.radiostat = 'alpha3MR';
 handles.stagenumber = 2 ;
 handles.Default_Data = {1.0,1.0;65,65;1.05,0.8;0.9,0.6;1,1;1,1;1,1;1,0.7;0.02,0.02;0.9,0.9};
 handles.Empty_Data = {[];[];[];[];[];[];[];[];[];[]};
+handles.rowname_alpha2 = {'Total Temp @ 3','alpha @ 3','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
+handles.rowname_alpha3MR = {'u3/u2','alpha @ 2','Mach @ 2','Mach @ 3R','Stator Z','Rotor Z','Stator c/h','Rotor c/h','Stator loss coefficient','Polytropic Efficiency'};
+
 set(handles.Table_Stage,'Data',handles.Default_Data);
 % Update handles structure
 guidata(hObject, handles);
@@ -382,8 +385,13 @@ function calculate_button_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 switch handles.radiostat
+    %% alpha2 unknown
     case 'alpha2'
+        stage_i = 1;
+        
         fcn_alpha_2un;
+        
+    %% alpha3 unknown    
     case 'alpha3'
         % fcn not yet defined
     case 'alpha3MR'
@@ -589,6 +597,18 @@ set(handles.radiobutton_alpha3,'Value',0);
 set(handles.radiobutton_M2,'Value',0);
 
 handles.radiostat = 'alpha2';
+%change table_stage
+set(handles.Table_Stage,'RowName',handles.rowname_alpha2); 
+if(get(handles.radiobutton7,'Value'))
+    new_data = handles.Empty_Data;
+elseif(get(handles.radiobutton8,'Value'))
+    new_data = [handles.Empty_Data,handles.Empty_Data];
+    for i=3:handles.stagenumber
+        new_data = [new_data,handles.Empty_Data];
+    end
+end
+set(handles.Table_Stage,'Data',new_data);
+%
 guidata(hObject, handles);
 % Hint: get(hObject,'Value') returns toggle state of radiobutton_alpha2
 
@@ -704,6 +724,21 @@ set(handles.radiobutton_alpha3,'Value',0);
 set(handles.radiobutton_M2,'Value',0);
 
 handles.radiostat = 'alpha3MR';
+
+set(handles.Table_Stage,'RowName',handles.rowname_alpha3MR);
+
+%change table_stage
+set(handles.Table_Stage,'RowName',handles.rowname_alpha3MR); 
+if(get(handles.radiobutton7,'Value'))
+    new_data = handles.Empty_Data;
+elseif(get(handles.radiobutton8,'Value'))
+    new_data = handles.Default_Data;
+    for i=3:handles.stagenumber
+        new_data = [new_data,handles.Empty_Data];
+    end
+end
+set(handles.Table_Stage,'Data',new_data);
+%
 guidata(hObject, handles);
 % Hint: get(hObject,'Value') returns toggle state of radiobutton_alpha3MR
 
@@ -841,7 +876,11 @@ function radiobutton8_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.stagenumber_textbox,'Enable','on');
 handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String'));
-new_data = handles.Default_Data;
+if(get(handles.radiobutton_alpha3MR,'Value'))
+    new_data = handles.Default_Data;
+else
+    new_data = [handles.Empty_Data,handles.Empty_Data];
+end
 for i=3:handles.stagenumber
     new_data = [new_data,handles.Empty_Data];
 end
