@@ -54,17 +54,22 @@ function Turbine_StageDesign_v2_OpeningFcn(hObject, eventdata, handles, varargin
 
 % Choose default command line output for Turbine_StageDesign_v2
 handles.output = hObject;
-handles.radiostat = 'alpha3MR';
+handles.radiostat = 'alpha2';
+set(handles.radiobutton_alpha2,'Value',1);
+
 handles.stagenumber = 2 ;
-handles.Default_Data = {1.0,1.0;65,65;1.05,0.8;0.9,0.6;1,1;1,1;1,1;1,0.7;0.02,0.02;0.9,0.9};
+handles.Default_Data_alpha2 = {'2925','2750';'0','0';'1.05','0.7';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
+handles.Default_Data_alpha3 = {'2925','2750';'43.88','41.65';'1.05','0.7';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
+handles.Default_Data_M2 = {'43.88','41.65';'0','0';'2925','2750';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
+handles.Default_Data_Tt3 ={'43.88','41.65';'0','0';'1.05','0.7';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
+
 handles.Empty_Data = {[];[];[];[];[];[];[];[];[];[]};
 handles.rowname_alpha2 = {'Total Temp @ 3','alpha @ 3','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 handles.rowname_alpha3 = {'Total Temp @ 3','alpha @ 2','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
-handles.rowname_alpha3MR = {'u3/u2','alpha @ 2','Mach @ 2','Mach @ 3R','Stator Z','Rotor Z','Stator c/h','Rotor c/h','Stator loss coefficient','Polytropic Efficiency'};
-handles.rowname_M2 = {[]};
+handles.rowname_M2 = {'alpha @ 2','alpha @ 3','Total Temp @ 3','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 handles.rowname_Tt3 = {'alpha @ 2','alpha @ 3','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 
-set(handles.Table_Stage,'Data',handles.Default_Data,'ColumnEditable',[true true true true true true true true true true]);
+set(handles.Table_Stage,'Data',handles.Default_Data_alpha2,'ColumnEditable',[true true true true true true true true true true],'RowName',handles.rowname_alpha2);
 % Update handles structure
 guidata(hObject, handles);
 
@@ -415,8 +420,6 @@ switch handles.radiostat
         end
         
         
-    case 'alpha3MR'
-%         fcn_alpha3MR;
     case 'Tt3'
         for stage_i=1:handles.stagenumber
             
@@ -431,7 +434,16 @@ switch handles.radiostat
         
         
     case 'M2' 
-        % fcn not yet defined
+        for stage_i=1:handles.stagenumber
+            
+            set_IN_M_2un;
+            fcn_M_2un;
+            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
+            handles.All_Results_Table{stage_i} = Results_Table; 
+            handles.All_Results_Panel{stage_i} = Results_Panel;
+            guidata(hObject, handles);
+            keyboard
+        end
 end
 
 
@@ -609,14 +621,14 @@ function radiobutton_alpha2_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton_alpha2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.Tt3_textbox,'Enable','off');
-set(handles.M3R_textbox,'Enable','off');
-set(handles.alpha3_textbox,'Enable','off');
-set(handles.alpha2_textbox,'Enable','off');
-set(handles.M2_textbox,'Enable','off');
+% set(handles.Tt3_textbox,'Enable','off');
+% set(handles.M3R_textbox,'Enable','off');
+% set(handles.alpha3_textbox,'Enable','off');
+% set(handles.alpha2_textbox,'Enable','off');
+% set(handles.M2_textbox,'Enable','off');
 
 set(handles.radiobutton_Tt3,'Value',0);
-set(handles.radiobutton_alpha3MR,'Value',0);
+% set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_alpha2,'Value',1);
 set(handles.radiobutton_alpha3,'Value',0);
 set(handles.radiobutton_M2,'Value',0);
@@ -627,7 +639,7 @@ set(handles.Table_Stage,'RowName',handles.rowname_alpha2);
 if(get(handles.radiobutton7,'Value'))
     new_data = handles.Empty_Data;
 elseif(get(handles.radiobutton8,'Value'))
-    new_data = [handles.Empty_Data,handles.Empty_Data];
+    new_data = handles.Default_Data_alpha2;
     for i=3:handles.stagenumber
         new_data = [new_data,handles.Empty_Data];
     end
@@ -643,13 +655,13 @@ function radiobutton_alpha3_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton_alpha3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.Tt3_textbox,'Enable','on');
-set(handles.M3R_textbox,'Enable','off');
-set(handles.alpha3_textbox,'Enable','off');
-set(handles.alpha2_textbox,'Enable','on');
-set(handles.M2_textbox,'Enable','on');
-
-set(handles.radiobutton_alpha3MR,'Value',0);
+% set(handles.Tt3_textbox,'Enable','on');
+% set(handles.M3R_textbox,'Enable','off');
+% set(handles.alpha3_textbox,'Enable','off');
+% set(handles.alpha2_textbox,'Enable','on');
+% set(handles.M2_textbox,'Enable','on');
+% 
+% set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_Tt3,'Value',0);
 set(handles.radiobutton_alpha2,'Value',0);
 set(handles.radiobutton_alpha3,'Value',1);
@@ -662,7 +674,7 @@ set(handles.Table_Stage,'RowName',handles.rowname_alpha3);
 if(get(handles.radiobutton7,'Value'))
     new_data = handles.Empty_Data;
 elseif(get(handles.radiobutton8,'Value'))
-    new_data = [handles.Empty_Data,handles.Empty_Data];
+    new_data = handles.Default_Data_alpha3;
     for i=3:handles.stagenumber
         new_data = [new_data,handles.Empty_Data];
     end
@@ -680,14 +692,14 @@ function radiobutton_Tt3_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-set(handles.Tt3_textbox,'Enable','off');
-set(handles.M3R_textbox,'Enable','off');
-
-set(handles.alpha3_textbox,'Enable','on');
-set(handles.alpha2_textbox,'Enable','on');
-set(handles.M2_textbox,'Enable','on');
-
-set(handles.radiobutton_alpha3MR,'Value',0);
+% set(handles.Tt3_textbox,'Enable','off');
+% set(handles.M3R_textbox,'Enable','off');
+% 
+% set(handles.alpha3_textbox,'Enable','on');
+% set(handles.alpha2_textbox,'Enable','on');
+% set(handles.M2_textbox,'Enable','on');
+% 
+% set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_Tt3,'Value',1);
 set(handles.radiobutton_alpha2,'Value',0);
 set(handles.radiobutton_alpha3,'Value',0);
@@ -699,7 +711,7 @@ set(handles.Table_Stage,'RowName',handles.rowname_Tt3);
 if(get(handles.radiobutton7,'Value'))
     new_data = handles.Empty_Data;
 elseif(get(handles.radiobutton8,'Value'))
-    new_data = [handles.Empty_Data,handles.Empty_Data];
+    new_data = handles.Default_Data_Tt3;
     for i=3:handles.stagenumber
         new_data = [new_data,handles.Empty_Data];
     end
@@ -716,13 +728,13 @@ function radiobutton_M2_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton_M2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.Tt3_textbox,'Enable','on');
-set(handles.M3R_textbox,'Enable','off');
-set(handles.alpha3_textbox,'Enable','on');
-set(handles.alpha2_textbox,'Enable','on');
-set(handles.M2_textbox,'Enable','off');
-
-set(handles.radiobutton_alpha3MR,'Value',0);
+% set(handles.Tt3_textbox,'Enable','on');
+% set(handles.M3R_textbox,'Enable','off');
+% set(handles.alpha3_textbox,'Enable','on');
+% set(handles.alpha2_textbox,'Enable','on');
+% set(handles.M2_textbox,'Enable','off');
+% 
+% set(handles.radiobutton_alpha3MR,'Value',0);
 set(handles.radiobutton_Tt3,'Value',0);
 set(handles.radiobutton_alpha2,'Value',0);
 set(handles.radiobutton_alpha3,'Value',0);
@@ -734,7 +746,7 @@ set(handles.Table_Stage,'RowName',handles.rowname_M2);
 if(get(handles.radiobutton7,'Value'))
     new_data = handles.Empty_Data;
 elseif(get(handles.radiobutton8,'Value'))
-    new_data = [handles.Empty_Data,handles.Empty_Data];
+    new_data = handles.Default_Data_M2;
     for i=3:handles.stagenumber
         new_data = [new_data,handles.Empty_Data];
     end
@@ -773,13 +785,13 @@ function radiobutton_alpha3MR_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton_alpha3MR (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.Tt3_textbox,'Enable','off');
-set(handles.M3R_textbox,'Enable','on');
-set(handles.alpha3_textbox,'Enable','off');
-set(handles.alpha2_textbox,'Enable','on');
-set(handles.M2_textbox,'Enable','on');
-
-set(handles.radiobutton_alpha3MR,'Value',1);
+% set(handles.Tt3_textbox,'Enable','off');
+% set(handles.M3R_textbox,'Enable','on');
+% set(handles.alpha3_textbox,'Enable','off');
+% set(handles.alpha2_textbox,'Enable','on');
+% set(handles.M2_textbox,'Enable','on');
+% 
+% set(handles.radiobutton_alpha3MR,'Value',1);
 set(handles.radiobutton_Tt3,'Value',0);
 set(handles.radiobutton_alpha2,'Value',0);
 set(handles.radiobutton_alpha3,'Value',0);
@@ -794,7 +806,7 @@ set(handles.Table_Stage,'RowName',handles.rowname_alpha3MR);
 if(get(handles.radiobutton7,'Value'))
     new_data = handles.Empty_Data;
 elseif(get(handles.radiobutton8,'Value'))
-    new_data = handles.Default_Data;
+    new_data = handles.Default_Data_alpha2;
     for i=3:handles.stagenumber
         new_data = [new_data,handles.Empty_Data];
     end
@@ -863,11 +875,23 @@ if( get(hObject,'Value') == 1 )
         handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) + 1 ;
         set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
         %% set table columns
-        new_data = handles.Default_Data;
+
+        switch(handles.radiostat)
+            case 'alpha2'
+                new_data = handles.Default_Data_alpha2;
+            case 'M2'
+                new_data = handles.Default_Data_M2;
+            case 'Tt3'
+                new_data = handles.Default_Data_Tt3;
+            case 'alpha3'
+                new_data = handles.Default_Data_alpha3;
+        end
+
         for i=3:handles.stagenumber
             new_data = [new_data,handles.Empty_Data];
         end
         set(handles.Table_Stage,'Data',new_data);
+
         %% columns set
     end
 elseif(get(hObject,'Value') == 0 )
@@ -875,11 +899,22 @@ elseif(get(hObject,'Value') == 0 )
         handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String')) - 1 ;
         set(handles.stagenumber_textbox,'String',num2str(handles.stagenumber));
         %% set table columns
-        new_data = handles.Default_Data;
+        switch(handles.radiostat)
+            case 'alpha2'
+                new_data = handles.Default_Data_alpha2;
+            case 'M2'
+                new_data = handles.Default_Data_M2;
+            case 'Tt3'
+                new_data = handles.Default_Data_Tt3;
+            case 'alpha3'
+                new_data = handles.Default_Data_alpha3;
+        end
+
         for i=3:handles.stagenumber
             new_data = [new_data,handles.Empty_Data];
         end
         set(handles.Table_Stage,'Data',new_data);
+        guidata(hObject, handles);
         %% columns set
     
     end
@@ -937,12 +972,21 @@ function radiobutton8_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.stagenumber_textbox,'Enable','on');
+
 handles.stagenumber = str2double(get(handles.stagenumber_textbox,'String'));
-if(get(handles.radiobutton_alpha3MR,'Value'))
-    new_data = handles.Default_Data;
-else
-    new_data = [handles.Empty_Data,handles.Empty_Data];
+
+switch(handles.radiostat)
+    case 'alpha2'
+        new_data = handles.Default_Data_alpha2;
+    case 'M2'
+        new_data = handles.Default_Data_M2;
+    case 'Tt3'
+        new_data = handles.Default_Data_Tt3;
+    case 'alpha3'
+        new_data = handles.Default_Data_alpha3;
+        
 end
+
 for i=3:handles.stagenumber
     new_data = [new_data,handles.Empty_Data];
 end
