@@ -387,9 +387,25 @@ function calculate_button_Callback(hObject, eventdata, handles)
 switch handles.radiostat
     %% alpha2 unknown
     case 'alpha2'
-        stage_i = 1;
+        for stage_i=1:handles.stagenumber
+            
+            set_IN_alpha_2un;
+            fcn_alpha_2un;
+            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
+            handles.All_Results_Table{stage_i} = Results_Table; 
+            handles.All_Results_Panel{stage_i} = Results_Panel;
+            guidata(hObject, handles);
+            keyboard
+        end
         
-        fcn_alpha_2un;
+        %% callback format
+        %close the current window
+        close(gcf);
+
+        %call up the Results Figure
+        Turbine_Results(handles.All_Results_Table,handles.All_Results_Panel);
+
+
         
     %% alpha3 unknown    
     case 'alpha3'
