@@ -144,6 +144,7 @@ if(handles.stagenumber < handles.maxstage )
 handles.stagenumber = handles.stagenumber + 1;
 %% Show new Results
 set(handles.data_table,'data',handles.TABLEDATA{handles.stagenumber});
+set(handles.stagenumber_statictext,'String',['Stage ',num2str(handles.stagenumber)])
 
 % "Results panel" data
 handles.results_data_stage = handles.results_data{handles.stagenumber};
@@ -177,7 +178,7 @@ if(handles.stagenumber > 1 )
 handles.stagenumber = handles.stagenumber - 1;
 %% Show new Results
 set(handles.data_table,'data',handles.TABLEDATA{handles.stagenumber});
-
+set(handles.stagenumber_statictext,'String',['Stage ',num2str(handles.stagenumber)]);
 % "Results panel" data
 handles.results_data_stage = handles.results_data{handles.stagenumber};
 set(handles.Pr_s_statictext,'String',num2str(handles.results_data_stage(1)));

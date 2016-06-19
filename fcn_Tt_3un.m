@@ -1,6 +1,3 @@
-%this code calculates stage parameters,
-% IN SI UNITS:
-% DONT FORGET TO CONVERT PRESSURE TO "PA"
 Tt1 = IN(1,stage_i);
 Pt1 = IN(2,stage_i);   % x10^3
 M1 = IN(3,stage_i);
@@ -13,9 +10,9 @@ y = IN(9,stage_i);
 R = IN(10,stage_i); %kJ/(kg.K)[cp = 1.245 kJ/(kg.K)]
 
 % partII variables
-Tt3 = IN_S(1,stage_i);
+alpha2 = IN_S(1,stage_i);
 M2 = IN_S(2,stage_i);
-alpha2 = IN_S(3,stage_i); %conver deg to rad
+alpha3 = IN_S(3,stage_i); %conver deg to rad
 u3_u2 = IN_S(4,stage_i);
 phi_s = IN_S(5,stage_i);
 phi_r = IN_S(6,stage_i);
@@ -32,11 +29,9 @@ v1 = V1*sin((alpha1));
 Tt2 = Tt1;
 T2 = T_Tt(Tt2,M2,y);
 V2 = V_Tt(Tt2,M2,y,gc,R);
+Tt3 = Tt3_(Tt1,wr,u3_u2,V2,alpha2,alpha3,y,R);
 sai = Sai(Tt1,Tt3,wr,gc,y,R);
 VR = 1/sqrt(2*sai);
-
-alpha3 = alpha3_(u3_u2,alpha2,sai,wr,V2); % check
-
 u2 = V2*cos(alpha2);
 v2 = V2*sin(alpha2);
 PHI = u2/wr;

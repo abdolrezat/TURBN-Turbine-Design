@@ -59,9 +59,12 @@ handles.stagenumber = 2 ;
 handles.Default_Data = {1.0,1.0;65,65;1.05,0.8;0.9,0.6;1,1;1,1;1,1;1,0.7;0.02,0.02;0.9,0.9};
 handles.Empty_Data = {[];[];[];[];[];[];[];[];[];[]};
 handles.rowname_alpha2 = {'Total Temp @ 3','alpha @ 3','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
+handles.rowname_alpha3 = {'Total Temp @ 3','alpha @ 2','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 handles.rowname_alpha3MR = {'u3/u2','alpha @ 2','Mach @ 2','Mach @ 3R','Stator Z','Rotor Z','Stator c/h','Rotor c/h','Stator loss coefficient','Polytropic Efficiency'};
+handles.rowname_M2 = {[]};
+handles.rowname_Tt3 = {'alpha @ 2','alpha @ 3','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 
-set(handles.Table_Stage,'Data',handles.Default_Data);
+set(handles.Table_Stage,'Data',handles.Default_Data,'ColumnEditable',[true true true true true true true true true true]);
 % Update handles structure
 guidata(hObject, handles);
 
@@ -398,40 +401,46 @@ switch handles.radiostat
             keyboard
         end
         
-        %% callback format
-        %close the current window
-        close(gcf);
-
-        %call up the Results Figure
-        Turbine_Results(handles.All_Results_Table,handles.All_Results_Panel);
-
-
-        
     %% alpha3 unknown    
     case 'alpha3'
-        % fcn not yet defined
+        for stage_i=1:handles.stagenumber
+            
+            set_IN_alpha_3un;
+            fcn_alpha_3un;
+            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
+            handles.All_Results_Table{stage_i} = Results_Table; 
+            handles.All_Results_Panel{stage_i} = Results_Panel;
+            guidata(hObject, handles);
+            keyboard
+        end
+        
+        
     case 'alpha3MR'
-        fcn_alpha3MR;
+%         fcn_alpha3MR;
     case 'Tt3'
-        % fcn not yet defined
+        for stage_i=1:handles.stagenumber
+            
+            set_IN_Tt_3un;
+            fcn_Tt_3un;
+            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
+            handles.All_Results_Table{stage_i} = Results_Table; 
+            handles.All_Results_Panel{stage_i} = Results_Panel;
+            guidata(hObject, handles);
+            keyboard
+        end
+        
+        
     case 'M2' 
         % fcn not yet defined
 end
 
 
-%% callback format
-
-
-% Turbine_Results({Results_Table,Results_Table2},{Results_Panel,Results_Panel2});
-%% test code
-
-
+%% callback Results Figure
 %close the current window
-% uncomment !! close(gcf);
-
+close(gcf);
 %call up the Results Figure
-% uncomment !! Turbine_Results(Results_Table,Results_Panel);
-guidata(hObject, handles);
+Turbine_Results(handles.All_Results_Table,handles.All_Results_Panel);
+
 
 
 
@@ -600,11 +609,11 @@ function radiobutton_alpha2_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton_alpha2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.Tt3_textbox,'Enable','on');
+set(handles.Tt3_textbox,'Enable','off');
 set(handles.M3R_textbox,'Enable','off');
-set(handles.alpha3_textbox,'Enable','on');
+set(handles.alpha3_textbox,'Enable','off');
 set(handles.alpha2_textbox,'Enable','off');
-set(handles.M2_textbox,'Enable','on');
+set(handles.M2_textbox,'Enable','off');
 
 set(handles.radiobutton_Tt3,'Value',0);
 set(handles.radiobutton_alpha3MR,'Value',0);
@@ -647,6 +656,19 @@ set(handles.radiobutton_alpha3,'Value',1);
 set(handles.radiobutton_M2,'Value',0);
 
 handles.radiostat = 'alpha3';
+
+%change table_stage
+set(handles.Table_Stage,'RowName',handles.rowname_alpha3); 
+if(get(handles.radiobutton7,'Value'))
+    new_data = handles.Empty_Data;
+elseif(get(handles.radiobutton8,'Value'))
+    new_data = [handles.Empty_Data,handles.Empty_Data];
+    for i=3:handles.stagenumber
+        new_data = [new_data,handles.Empty_Data];
+    end
+end
+set(handles.Table_Stage,'Data',new_data);
+%
 guidata(hObject, handles);
 
 % Hint: get(hObject,'Value') returns toggle state of radiobutton_alpha3
@@ -672,6 +694,18 @@ set(handles.radiobutton_alpha3,'Value',0);
 set(handles.radiobutton_M2,'Value',0);
 
 handles.radiostat = 'Tt3';
+%change table_stage
+set(handles.Table_Stage,'RowName',handles.rowname_Tt3); 
+if(get(handles.radiobutton7,'Value'))
+    new_data = handles.Empty_Data;
+elseif(get(handles.radiobutton8,'Value'))
+    new_data = [handles.Empty_Data,handles.Empty_Data];
+    for i=3:handles.stagenumber
+        new_data = [new_data,handles.Empty_Data];
+    end
+end
+set(handles.Table_Stage,'Data',new_data);
+%
 guidata(hObject, handles);
 
 % Hint: get(hObject,'Value') returns toggle state of radiobutton_Tt3
@@ -695,6 +729,18 @@ set(handles.radiobutton_alpha3,'Value',0);
 set(handles.radiobutton_M2,'Value',1);
 
 handles.radiostat = 'M2';
+%change table_stage
+set(handles.Table_Stage,'RowName',handles.rowname_M2); 
+if(get(handles.radiobutton7,'Value'))
+    new_data = handles.Empty_Data;
+elseif(get(handles.radiobutton8,'Value'))
+    new_data = [handles.Empty_Data,handles.Empty_Data];
+    for i=3:handles.stagenumber
+        new_data = [new_data,handles.Empty_Data];
+    end
+end
+set(handles.Table_Stage,'Data',new_data);
+%
 guidata(hObject, handles);
 % Hint: get(hObject,'Value') returns toggle state of radiobutton_M2
 
