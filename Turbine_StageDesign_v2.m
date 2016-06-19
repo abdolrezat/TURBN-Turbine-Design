@@ -403,7 +403,7 @@ switch handles.radiostat
             handles.All_Results_Table{stage_i} = Results_Table; 
             handles.All_Results_Panel{stage_i} = Results_Panel;
             guidata(hObject, handles);
-            keyboard
+            
         end
         
     %% alpha3 unknown    
@@ -416,7 +416,7 @@ switch handles.radiostat
             handles.All_Results_Table{stage_i} = Results_Table; 
             handles.All_Results_Panel{stage_i} = Results_Panel;
             guidata(hObject, handles);
-            keyboard
+            
         end
         
         
@@ -429,7 +429,7 @@ switch handles.radiostat
             handles.All_Results_Table{stage_i} = Results_Table; 
             handles.All_Results_Panel{stage_i} = Results_Panel;
             guidata(hObject, handles);
-            keyboard
+            
         end
         
         
@@ -442,7 +442,7 @@ switch handles.radiostat
             handles.All_Results_Table{stage_i} = Results_Table; 
             handles.All_Results_Panel{stage_i} = Results_Panel;
             guidata(hObject, handles);
-            keyboard
+            
         end
 end
 
