@@ -57,6 +57,15 @@ function Turbine_Results_OpeningFcn(hObject, eventdata, handles, varargin)
 % varargin   command line arguments to Turbine_Results (see VARARGIN)
 
 % Choose default command line output for Turbine_Results
+%1
+h = waitbar(0,'Calculating and Preparing Results, Please Wait...');
+set(h,'windowstyle','modal');
+steps = 1000;
+for step = 1:200
+    % computations take place here
+    waitbar(step / steps)
+end
+%1
 handles.output = hObject;
 handles.stagenumber = 1; % start from stage 1, not to be confused with total stagenumbers
 % 
@@ -69,9 +78,19 @@ handles.stagenumber = 1; % start from stage 1, not to be confused with total sta
 handles.TABLEDATA = varargin{1};
 set(handles.data_table,'data',handles.TABLEDATA{1});
 % end of setting table data
-
+%2
+for step = 200:400
+    % computations take place here
+    waitbar(step / steps)
+end
+%2
 handles.maxstage = length(handles.TABLEDATA);%get total number of stages
-
+%3
+for step = 400:3:steps
+    % computations take place here
+    waitbar(step / steps)
+end
+%3
 % Setting Image
 % Read in Image
 imageArray =imread('Nomenclature.png','png');
@@ -79,6 +98,7 @@ imageArray =imread('Nomenclature.png','png');
 axes(handles.image_axes);
 % Put the image array into the axes so it will appear on the GUI
 imshow(imageArray);
+
 
 % "Results panel" data
 handles.results_data = varargin{2};
@@ -99,6 +119,9 @@ set(handles.blade_space_t_statictext,'String',num2str(handles.results_data_stage
 
 % Update handles structure
 guidata(hObject, handles);
+
+close(h) 
+
 
 % UIWAIT makes Turbine_Results wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
