@@ -67,40 +67,51 @@ for step = 1:200
 end
 %1
 handles.output = hObject;
-handles.stagenumber = 1; % start from stage 1, not to be confused with total stagenumbers
-% 
+% start from stage 1, not to be confused with the number of total stages
+handles.stagenumber = 1; 
+
+%some snippet of code similar to below may be added later when the GUI
+%supports SI units
 % if(varargin{3} == 'SI')
 %     % revise : fill with SI units
 % else
-%     handles.units = {'R';'R';'psia';'psia';'';'ft/s';'ft/s';'ft/s';'deg';'deg';'in.'};
+%     handles.units = {'R';'R';'psia';'psia';'';'ft/s';'ft/s';'ft/s';...
+%     'deg';'deg';'in.'};
 % end
 
+%TABLEDATA is an array of cells representing data from each stage, so
+%TABLEDATA{1} is a matrix containing stage 1 data.
 handles.TABLEDATA = varargin{1};
+%initialize table data
 set(handles.data_table,'data',handles.TABLEDATA{1});
-% end of setting table data
+
+
 %2
 for step = 200:400
     % computations take place here
     waitbar(step / steps)
 end
 %2
-handles.maxstage = length(handles.TABLEDATA);%get total number of stages
+
+%get total number of stages
+handles.maxstage = length(handles.TABLEDATA);
 %3
 for step = 400:3:steps
     % computations take place here
     waitbar(step / steps)
 end
 %3
-% Setting Image
+
+% Set Image
 % Read in Image
 imageArray =imread('Nomenclature.png','png');
-% Switch active axes to the one you made for the image.
+% Activate axes
 axes(handles.image_axes);
 % Put the image array into the axes so it will appear on the GUI
 imshow(imageArray);
 
 
-% "Results panel" data
+% Set "Results panel" data
 handles.results_data = varargin{2};
 handles.results_data_stage = handles.results_data{1};
 set(handles.Pr_s_statictext,'String',num2str(handles.results_data_stage(1)));
@@ -120,7 +131,7 @@ set(handles.blade_space_t_statictext,'String',num2str(handles.results_data_stage
 % Update handles structure
 guidata(hObject, handles);
 
-close(h) 
+close(h) %close wait bar
 
 
 % UIWAIT makes Turbine_Results wait for user response (see UIRESUME)
@@ -163,13 +174,15 @@ function nextstage_button_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+%change current stage number
 if(handles.stagenumber < handles.maxstage )
 handles.stagenumber = handles.stagenumber + 1;
-%% Show new Results
+
+% Show new Results
 set(handles.data_table,'data',handles.TABLEDATA{handles.stagenumber});
 set(handles.stagenumber_statictext,'String',['Stage ',num2str(handles.stagenumber)])
 
-% "Results panel" data
+% update "Results panel" data
 handles.results_data_stage = handles.results_data{handles.stagenumber};
 set(handles.Pr_s_statictext,'String',num2str(handles.results_data_stage(1)));
 set(handles.n_s_statictext,'String', num2str(handles.results_data_stage(2)));
@@ -183,8 +196,6 @@ set(handles.A3_statictext,'String',num2str(handles.results_data_stage(9)));
 set(handles.blade_space_h_statictext,'String',num2str(handles.results_data_stage(10)));
 set(handles.blade_space_m_statictext,'String',num2str(handles.results_data_stage(11)));
 set(handles.blade_space_t_statictext,'String',num2str(handles.results_data_stage(12)));
-
-%% update Title of stage
 
 % Update handles structure
 guidata(hObject, handles);
@@ -197,12 +208,14 @@ function prevstage_button_Callback(hObject, eventdata, handles)
 % hObject    handle to prevstage_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
 if(handles.stagenumber > 1 )
 handles.stagenumber = handles.stagenumber - 1;
-%% Show new Results
+
+% Show new Results
 set(handles.data_table,'data',handles.TABLEDATA{handles.stagenumber});
 set(handles.stagenumber_statictext,'String',['Stage ',num2str(handles.stagenumber)]);
-% "Results panel" data
+% update "Results panel" data
 handles.results_data_stage = handles.results_data{handles.stagenumber};
 set(handles.Pr_s_statictext,'String',num2str(handles.results_data_stage(1)));
 set(handles.n_s_statictext,'String', num2str(handles.results_data_stage(2)));
@@ -216,9 +229,6 @@ set(handles.A3_statictext,'String',num2str(handles.results_data_stage(9)));
 set(handles.blade_space_h_statictext,'String',num2str(handles.results_data_stage(10)));
 set(handles.blade_space_m_statictext,'String',num2str(handles.results_data_stage(11)));
 set(handles.blade_space_t_statictext,'String',num2str(handles.results_data_stage(12)));
-
-%% update Title of stage
-
 
 % Update handles structure
 guidata(hObject, handles);

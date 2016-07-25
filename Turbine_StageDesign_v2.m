@@ -54,21 +54,24 @@ function Turbine_StageDesign_v2_OpeningFcn(hObject, eventdata, handles, varargin
 
 % Choose default command line output for Turbine_StageDesign_v2
 handles.output = hObject;
+%initializing variables such as the radio button status, stage number and
+%table row names
 handles.radiostat = 'alpha2';
 set(handles.radiobutton_alpha2,'Value',1);
 
+%data below is used to construct tables whenever the stage number or radio
+%button is changed. 
 handles.stagenumber = 2 ;
 handles.Default_Data_alpha2 = {'2925','2750';'0','0';'1.05','0.7';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
 handles.Default_Data_alpha3 = {'2925','2750';'43.88','41.65';'1.05','0.7';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
 handles.Default_Data_M2 = {'43.88','41.65';'0','0';'2925','2750';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
 handles.Default_Data_Tt3 ={'43.88','41.65';'0','0';'1.05','0.7';'0.9','0.6';'0.9','0.9';'1','1';'0.06','0.02';'0','0';'1','1';'1','1'};
-
 handles.Empty_Data = {[];[];[];[];[];[];[];[];[];[]};
 handles.rowname_alpha2 = {'Total Temp @ 3','alpha @ 3','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 handles.rowname_alpha3 = {'Total Temp @ 3','alpha @ 2','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 handles.rowname_M2 = {'alpha @ 2','alpha @ 3','Total Temp @ 3','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
 handles.rowname_Tt3 = {'alpha @ 2','alpha @ 3','Mach @ 2','u3/u2','Stator Z','Rotor Z','stator loss coefficient','rotor loss coefficient','stator c/h','rotor c/h'};
-
+% constructing Table_Stage
 set(handles.Table_Stage,'Data',handles.Default_Data_alpha2,'ColumnEditable',[true true true true true true true true true true],'RowName',handles.rowname_alpha2);
 % Update handles structure
 guidata(hObject, handles);
@@ -396,10 +399,20 @@ switch handles.radiostat
     %% alpha2 unknown
     case 'alpha2'
         for stage_i=1:handles.stagenumber
+            %set two matrices called IN and IN_S, see the flowchart diagram
+            %for a more comprehensive understanding of the algorithm
+            set_IN_alpha_2un; 
             
-            set_IN_alpha_2un;
+            %use the stage properties and inlet conditions IN and IN_S to
+            %calculate outlet conditions
             fcn_alpha_2un;
-            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
+            
+            %pass the calculated outlet stage conditions to next stage inlet
+            %conditions, which will be used in each iteration in set_IN_*
+            handles.next_stage_data = Results_Table(:,10); 
+            
+            %save the calculated values, these two cell arrays will be
+            %passed to "Turbine_Results" to be shown.
             handles.All_Results_Table{stage_i} = Results_Table; 
             handles.All_Results_Panel{stage_i} = Results_Panel;
             guidata(hObject, handles);
