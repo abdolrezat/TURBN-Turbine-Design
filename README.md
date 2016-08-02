@@ -7,6 +7,6 @@ see the figures folder for screenshots and algorithms flowchart.
 Run the Turbine_StageDesign_v2.m in MATLAB.
 Properties of a two-stage axial turbine is already loaded into the program. It can be run with one click!
 #License
-A license may be added later. But for now, you are responsible for verifying the results of this program.
+See the License file.
 #Contribute
 If you're interested in improving the capabilities of this program, please contribute or contact me. ;)
