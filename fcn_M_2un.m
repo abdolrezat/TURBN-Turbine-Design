@@ -1,24 +1,26 @@
-Tt1 = IN(1,stage_i);
-Pt1 = IN(2,stage_i);   % x10^3
-M1 = IN(3,stage_i);
-alpha1 = IN(4,stage_i); %convert degree to radian using deg2rad()
-wr = IN(5,stage_i); %m/s
-m_dot = IN(6,stage_i); %lbm/s
-rm = IN(7,stage_i); %in
-gc = IN(8,stage_i); 
-y = IN(9,stage_i);
-R = IN(10,stage_i); %kJ/(kg.K)[cp = 1.245 kJ/(kg.K)]
+function handles = fcn_M_2un(handles,stage_i)
+
+Tt1 = handles.IN(1,stage_i);
+Pt1 = handles.IN(2,stage_i);   % x10^3
+M1 = handles.IN(3,stage_i);
+alpha1 = handles.IN(4,stage_i); %convert degree to radian using deg2rad()
+wr = handles.IN(5,stage_i); %m/s
+m_dot = handles.IN(6,stage_i); %lbm/s
+rm = handles.IN(7,stage_i); %in
+gc = handles.IN(8,stage_i); 
+y = handles.IN(9,stage_i);
+R = handles.IN(10,stage_i); %kJ/(kg.K)[cp = 1.245 kJ/(kg.K)]
 
 % partII variables
-alpha2 = IN_S(1,stage_i);
+alpha2 = handles.IN_S(1,stage_i);
 %
-Tt3 = IN_S(2,stage_i);
-alpha3 = IN_S(3,stage_i); %conver deg to rad
-u3_u2 = IN_S(4,stage_i);
-phi_s = IN_S(5,stage_i);
-phi_r = IN_S(6,stage_i);
-Zs = IN_S(7,stage_i);
-c_h = IN_S(8,stage_i);
+Tt3 = handles.IN_S(2,stage_i);
+alpha3 = handles.IN_S(3,stage_i); %conver deg to rad
+u3_u2 = handles.IN_S(4,stage_i);
+phi_s = handles.IN_S(5,stage_i);
+phi_r = handles.IN_S(6,stage_i);
+Zs = handles.IN_S(7,stage_i);
+c_h = handles.IN_S(8,stage_i);
 
 
 %% solution
@@ -135,4 +137,5 @@ Results_Table(11,:) = [r1h,rm,r1t,r2h,rm,r2t,rm,rm,r3h,rm,r3t];
 %% Results Panel
 Results_Panel = [Pr_s,n_s,sai,PHI,VR,RPM_,A1,A2,A3,blade_spacing_h,blade_spacing_m,blade_spacing_t];
 
-
+handles.Results_Table = Results_Table;
+handles.Results_Panel = Results_Panel;

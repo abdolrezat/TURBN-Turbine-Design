@@ -59,6 +59,7 @@ handles.output = hObject;
 handles.radiostat = 'alpha2';
 set(handles.radiobutton_alpha2,'Value',1);
 
+
 %data below is used to construct tables whenever the stage number or radio
 %button is changed. 
 handles.stagenumber = 2 ;
@@ -401,20 +402,22 @@ switch handles.radiostat
         for stage_i=1:handles.stagenumber
             %set two matrices called IN and IN_S, see the flowchart diagram
             %for a more comprehensive understanding of the algorithm
-            set_IN_alpha_2un; 
             
+            handles = set_IN_alpha_2un(handles,stage_i); 
+            
+
             %use the stage properties and inlet conditions IN and IN_S to
             %calculate outlet conditions
-            fcn_alpha_2un;
+            handles = fcn_alpha_2un(handles,stage_i);
             
             %pass the calculated outlet stage conditions to next stage inlet
             %conditions, which will be used in each iteration in set_IN_*
-            handles.next_stage_data = Results_Table(:,10); 
+            handles.next_stage_data = handles.Results_Table(:,10); 
             
             %save the calculated values, these two cell arrays will be
             %passed to "Turbine_Results" to be shown.
-            handles.All_Results_Table{stage_i} = Results_Table; 
-            handles.All_Results_Panel{stage_i} = Results_Panel;
+            handles.All_Results_Table{stage_i} = handles.Results_Table; 
+            handles.All_Results_Panel{stage_i} = handles.Results_Panel;
             guidata(hObject, handles);
             
         end
@@ -423,11 +426,13 @@ switch handles.radiostat
     case 'alpha3'
         for stage_i=1:handles.stagenumber
             
-            set_IN_alpha_3un;
-            fcn_alpha_3un;
-            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
-            handles.All_Results_Table{stage_i} = Results_Table; 
-            handles.All_Results_Panel{stage_i} = Results_Panel;
+            handles = set_IN_alpha_3un(handles,stage_i);
+            
+            handles = fcn_alpha_3un(handles,stage_i);
+            
+            handles.next_stage_data = handles.Results_Table(:,10);     % at mean line / check
+            handles.All_Results_Table{stage_i} = handles.Results_Table; 
+            handles.All_Results_Panel{stage_i} = handles.Results_Panel;
             guidata(hObject, handles);
             
         end
@@ -436,11 +441,12 @@ switch handles.radiostat
     case 'Tt3'
         for stage_i=1:handles.stagenumber
             
-            set_IN_Tt_3un;
-            fcn_Tt_3un;
-            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
-            handles.All_Results_Table{stage_i} = Results_Table; 
-            handles.All_Results_Panel{stage_i} = Results_Panel;
+            handles = set_IN_Tt_3un(handles,stage_i);
+            
+            handles = fcn_Tt_3un(handles,stage_i);
+            handles.next_stage_data = handles.Results_Table(:,10);     % at mean line / check
+            handles.All_Results_Table{stage_i} = handles.Results_Table; 
+            handles.All_Results_Panel{stage_i} = handles.Results_Panel;
             guidata(hObject, handles);
             
         end
@@ -449,11 +455,12 @@ switch handles.radiostat
     case 'M2' 
         for stage_i=1:handles.stagenumber
             
-            set_IN_M_2un;
-            fcn_M_2un;
-            handles.next_stage_data = Results_Table(:,10);     % at mean line / check
-            handles.All_Results_Table{stage_i} = Results_Table; 
-            handles.All_Results_Panel{stage_i} = Results_Panel;
+            handles = set_IN_M_2un(handles,stage_i);
+            
+            handles = fcn_M_2un(handles,stage_i);
+            handles.next_stage_data = handles.Results_Table(:,10);     % at mean line / check
+            handles.All_Results_Table{stage_i} = handles.Results_Table; 
+            handles.All_Results_Panel{stage_i} = handles.Results_Panel;
             guidata(hObject, handles);
             
         end
