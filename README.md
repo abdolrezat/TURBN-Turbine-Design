@@ -6,10 +6,11 @@ The code is mainly based on Mattingly's "Elements of Propulsion", it is named TU
 see the figures folder for screenshots and algorithms flowchart.
 
 # Run the program
-Run the Turbine_StageDesign_v2.m in MATLAB.
+Run the `Turbine_StageDesign_v2.m` script in MATLAB.
 Properties of a two-stage axial turbine is already loaded into the program. It can be run with one click!
 
 # License
 See the License file.
-#Contribute
+
+# Contribute
 If you're interested in improving the capabilities of this program, please contribute or contact me. ;)
