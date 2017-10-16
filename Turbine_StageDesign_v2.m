@@ -1,4 +1,5 @@
 function varargout = Turbine_StageDesign_v2(varargin)
+addpath('functions')
 % TURBINE_STAGEDESIGN_V2 MATLAB code for Turbine_StageDesign_v2.fig
 %      TURBINE_STAGEDESIGN_V2, by itself, creates a new TURBINE_STAGEDESIGN_V2 or raises the existing
 %      singleton*.
