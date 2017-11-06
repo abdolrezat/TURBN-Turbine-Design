@@ -40,7 +40,7 @@ The algorithm for calculating the results which happens in the heart of `Turbine
 
 <p align="center"><img width=60% src="https://raw.githubusercontent.com/abdolrezat/TURBN-Turbine-Design/master/Figures/Algorithm.png"></p>
 
-Additional formulas for calculations can be found in these functions. Some of the formulas are available directly in the book, some formulas, however, were derived by hand and do not exist in the book, but are present in the figures in the book.
+Additional formulas for calculations can be found in these functions. See the Appendix of the manual (Chapter 5) for a proportion of the formulas. Some of the formulas are available directly in the book, some formulas, however, were derived by hand and do not exist in the book, but are present in the figures in the book.
 
 ## Acknowledgments
 
