@@ -1,6 +1,6 @@
 <p align="center"><img width=100% src="https://raw.githubusercontent.com/abdolrezat/TURBN-Turbine-Design/master/Figures/Turbine_Stage_Design_ResultsWindow%20-%20Copy.png"></p>
 
-# TURBN-Turbine-Design ![MATLAB](https://img.shields.io/badge/MATLAB-all%20versions-orange.svg)
+# TURBN-Turbine-Design ![MATLAB](https://img.shields.io/badge/MATLAB-all%20versions-orange.svg) ![DOI](https://img.shields.io/badge/DOI-10.13140%2FRG.2.2.30007.32164-blue.svg)
 
 A MATLAB GUI for calculating detailed properties of multi-stage axial turbines. See the interface screenshots or just run the code, it's pre-loaded with examples!
 
