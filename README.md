@@ -21,10 +21,7 @@ Input Properties of a two-stage axial turbine is already loaded into the program
 You can run the code with different inputs:
 
 - Determine how many stages there are in the area labeled in the figure above as 2.1.2.
-- Define which parameters of the engine input you have and which parameters you don't have using the radio buttons in 2.1.1, the figure below should help you choose:
-
-<p align="center"><img width=60% src="https://raw.githubusercontent.com/abdolrezat/TURBN-Turbine-Design/master/Figures/Unknowns.png"></p>
-
+- Define which parameters of the engine input you have and which parameters you don't have using the radio buttons in 2.1.1.
 - Fill out the necessary inputs in the area labeled as 2.1.3.
 - Fill out the required properties of each stage in the area labeled as 2.1.4. These parameters depend on the buttons chosen in steps 1 & 2.
 
@@ -40,11 +37,15 @@ The algorithm for calculating the results which happens in the heart of `Turbine
 
 <p align="center"><img width=60% src="https://raw.githubusercontent.com/abdolrezat/TURBN-Turbine-Design/master/Figures/Algorithm.png"></p>
 
+Asterisks determine the name of the function that is being used, which is different depending on which option (radio button) is chosen. The flowchart below contains how these functions are named:
+
+<p align="center"><img width=60% src="https://raw.githubusercontent.com/abdolrezat/TURBN-Turbine-Design/master/Figures/Unknowns.png"></p>
+
 Additional formulas for calculations can be found in these functions. See the Appendix of the manual (Chapter 5) for a proportion of the formulas. Some of the formulas are available directly in the book, some formulas, however, were derived by hand and do not exist in the book, but are present in the figures in the book.
 
 ## Acknowledgments
 
-The code is mainly based on [Jack D. Mattingly](https://www.goodreads.com/author/show/558868.Jack_D_Mattingly)'s [**"Elements of Propulsion"**](https://www.goodreads.com/book/show/1604171.Elements_of_Gas_Turbine_Propulsion), it contains the name *TURBN* similar to the actual program mentioned in the book which is not available on the internet. This repository is made for educational purposes, it does solve the problems in the book so it would be a useful resource for students. However, it does not have all the properties of the commercial program.
+The code is mainly based on [Jack D. Mattingly](https://www.goodreads.com/author/show/558868.Jack_D_Mattingly)'s [**"Elements of Propulsion"**](https://www.goodreads.com/book/show/1604171.Elements_of_Gas_Turbine_Propulsion), it contains the name *TURBN* similar to the actual program mentioned in the book which is not available on the internet. This repository is made for educational purposes, it does solve the problems in the book so it would be a useful resource for students. However, it does not have all the features of the commercial program.
 
 ## License
 
